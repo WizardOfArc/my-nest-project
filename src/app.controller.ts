@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -11,19 +11,42 @@ export class AppController {
   }
 
   @Get('double/:input')
-  getDouble(@Param() params): number {
-    return this.appService.getDouble(params.input);
+  getDouble(@Param( 'input', ParseIntPipe) input: number): number {
+    return this.appService.getDouble(input);
   }
 
   @Get('fannify/:num')
-  getFannify(@Param() params): number {
-    return this.appService.getFannify(params.num);
+  getFannify(@Param('num', ParseIntPipe) num: number): number {
+    return this.appService.getFannify(num);
   }
 
   @Get('dubbafan/:nummy')
-  getDubbaFan(@Param() params): number {
-    return this.appService.getDouble(this.appService.getFannify(params.nummy));
+  getDubbaFan(@Param('nummy', ParseIntPipe) nummy: number): number {
+    return this.appService.getDouble(this.appService.getFannify(nummy));
   }
 
+  @Get('parens/:input')
+  getParens(@Param( 'input', ParseIntPipe) input: number): string[] {
+    return this.appService.getParens(input);
+  }
 
+  @Get('parensbfs/:input')
+  getParensBFS(@Param( 'input', ParseIntPipe) input: number): string[] {
+    return this.appService.getParensBFS(input);
+  }
+
+  @Get('parensint/:input')
+  getParensInt(@Param( 'input', ParseIntPipe) input: number): string[] {
+    return this.appService.getParensInt(input);
+  }
+
+  @Get('primecount/:num')
+  getPrimeCount(@Param('num', ParseIntPipe) num: number): number {
+    return this.appService.getPrimeCount(num);
+  }
+
+  @Get('fake/:rest')
+  getFakeProxy(@Param('rest') rest: string) {
+    return this.appService.getFakeProxy(rest);
+  }
 }
