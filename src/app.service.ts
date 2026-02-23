@@ -45,6 +45,37 @@ export class AppService {
     return memoMap.get(num) ?? [];
   }
 
+  getParansEmptyAgusRepack(pairs: number) {
+    let start = Date.now();
+    if (0 === pairs) {
+      let diff: number = Date.now() - start;
+      console.log(`Empty and Repack for ${pairs} took ${diff} milliseconds`);
+      return [];
+    }
+    // try the memoized - but instead of for all specific numbers - we use 'current', 'previous': below
+
+    let memoMap = new Map<string, string[]>();
+    memoMap.set('curr', ['()']);
+    for (let k = 2; k <= pairs; k++) {
+      let soFar = memoMap.get('curr')!;
+      let newList = new Set<string>;
+      if(!soFar){
+        memoMap.set('curr', ['()'])
+      }
+      for (let parens of soFar!) {
+         newList.add('()' + parens);
+         newList.add('(' + parens + ')');
+         newList.add(parens + '()');
+      }
+      memoMap.set('curr', [...newList]);
+    }
+    // try the memoized - but instead of for all specific numbers - we use 'current', 'previous': above
+
+    let diff: number = Date.now() - start;
+    console.log(`Empty and Repack for ${pairs} took ${diff} milliseconds`);
+    return memoMap.get('curr') ?? [];
+  }
+
   getParensBFS(numPairs: number){
     let start = Date.now();
     if (0 === numPairs){

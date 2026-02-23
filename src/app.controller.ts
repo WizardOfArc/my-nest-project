@@ -40,6 +40,11 @@ export class AppController {
     return this.appService.getParensInt(input);
   }
 
+  @Get('parensrepack/:input')
+  getParensRepack(@Param( 'input', ParseIntPipe) input: number): string[] {
+    return this.appService.getParansEmptyAgusRepack(input);
+  }
+
   @Get('primecount/:num')
   getPrimeCount(@Param('num', ParseIntPipe) num: number): number {
     return this.appService.getPrimeCount(num);
